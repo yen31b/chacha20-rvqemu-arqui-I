@@ -1,3 +1,4 @@
+.section .text
 .global chacha20_block
 
 # En C seria como void block(uint32_t *output_block, const uint32_t *initial_state);
@@ -137,10 +138,18 @@ sum_final_loop:
     j sum_final_loop
 
 sum_final_loop_end:
-    #reset de los registros
+    # restore all registers that call saved
     lw ra, 172(sp)
     lw s0, 168(sp)
     lw s1, 164(sp)
+    lw s2,  160(sp)
+    lw s3,  156(sp)
+    lw s4,  152(sp)
+    lw s5,  148(sp)
+    lw s6,  144(sp)
+    lw s7,  140(sp)
+    lw s8,  136(sp)
+    lw s9,  132(sp)
     lw s10, 128(sp)
     addi sp, sp, 176
     ret
