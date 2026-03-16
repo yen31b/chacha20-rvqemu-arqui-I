@@ -143,6 +143,11 @@ void main(void) {
         print_string("SOME TESTS FAILED\n");
     }
 
+    // Signal QEMU to exit via SiFive test device (virt machine: 0x100000)
+    // Writing 0x5555 = pass, 0x3333 = fail
+    volatile uint32_t *qemu_exit = (volatile uint32_t *)0x100000;
+    *qemu_exit = (tests_passed == tests_run) ? 0x5555 : 0x3333;
+
     while (1) {
         __asm__ volatile("nop");
     }

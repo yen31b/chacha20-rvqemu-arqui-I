@@ -1,43 +1,11 @@
 #!/bin/bash
 
-# Build script for chacha20_quarter_round tests
-echo "Building quarter round tests..."
+# Build script for all ChaCha20 tests
+# Requires build.sh to have been run first (needs startup.o, chacha20_quarter_round.o, block_chacha20.o)
+echo "Building all ChaCha20 tests..."
 
-# Compile startup assembly
-riscv64-unknown-elf-gcc \
-    -march=rv32im \
-    -mabi=ilp32 \
-    -nostdlib \
-    -ffreestanding \
-    -g3 \
-    -gdwarf-4 \
-    -c \
-    startup.s \
-    -o startup.o
+# --- Test: chacha20_quarter_round ---
 
-if [ $? -ne 0 ]; then
-    echo "Startup assembly compilation failed"
-    exit 1
-fi
-
-# Compile ChaCha20 quarter round assembly
-riscv64-unknown-elf-gcc \
-    -march=rv32im \
-    -mabi=ilp32 \
-    -nostdlib \
-    -ffreestanding \
-    -g3 \
-    -gdwarf-4 \
-    -c \
-    chacha20_quarter_round.s \
-    -o chacha20_quarter_round.o
-
-if [ $? -ne 0 ]; then
-    echo "ChaCha20 quarter round assembly compilation failed"
-    exit 1
-fi
-
-# Compile test C source
 riscv64-unknown-elf-gcc \
     -march=rv32im \
     -mabi=ilp32 \
@@ -50,11 +18,10 @@ riscv64-unknown-elf-gcc \
     -o test_quarter_round.o
 
 if [ $? -ne 0 ]; then
-    echo "Test C compilation failed"
+    echo "test_quarter_round.c compilation failed"
     exit 1
 fi
 
-# Link object files
 riscv64-unknown-elf-gcc \
     -march=rv32im \
     -mabi=ilp32 \
@@ -68,9 +35,48 @@ riscv64-unknown-elf-gcc \
     -T linker.ld \
     -o test_quarter_round.elf
 
-if [ $? -eq 0 ]; then
-    echo "Build successful: test_quarter_round.elf created"
-else
-    echo "Linking failed"
+if [ $? -ne 0 ]; then
+    echo "Linking test_quarter_round.elf failed"
     exit 1
 fi
+echo "Built: test_quarter_round.elf"
+
+# --- Test: chacha20_block ---
+
+riscv64-unknown-elf-gcc \
+    -march=rv32im \
+    -mabi=ilp32 \
+    -nostdlib \
+    -ffreestanding \
+    -g3 \
+    -gdwarf-4 \
+    -c \
+    test_block_chacha20.c \
+    -o test_block_chacha20.o
+
+if [ $? -ne 0 ]; then
+    echo "test_block_chacha20.c compilation failed"
+    exit 1
+fi
+
+riscv64-unknown-elf-gcc \
+    -march=rv32im \
+    -mabi=ilp32 \
+    -nostdlib \
+    -ffreestanding \
+    -g3 \
+    -gdwarf-4 \
+    startup.o \
+    test_block_chacha20.o \
+    block_chacha20.o \
+    chacha20_quarter_round.o \
+    -T linker.ld \
+    -o test_block_chacha20.elf
+
+if [ $? -ne 0 ]; then
+    echo "Linking test_block_chacha20.elf failed"
+    exit 1
+fi
+echo "Built: test_block_chacha20.elf"
+
+echo "All tests built successfully"
