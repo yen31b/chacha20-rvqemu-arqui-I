@@ -35,7 +35,8 @@ chacha20_block:
 
 
 copy_loop:
-    bge t0, 16, copy_loop_end
+    li t6, 16
+    bge t0, t6, copy_loop_end
     slli t1, t0, 2    # offset = i * 4
     add t2, s3, t1    # Source address
     lw t3, 0(t2)      # Load word
@@ -52,7 +53,8 @@ copy_loop_end:
     # 10 double rounds
     li s4, 0        # i = 0
 main_loop:
-    bge s4, 10, main_loop_end
+    li t6, 10
+    bge s4, t6, main_loop_end
 
     #Columnas
 
@@ -120,7 +122,8 @@ main_loop_end:
 
     li t0, 0 # i = 0
 sum_final_loop:
-    bge t0, 16, sum_final_loop_end
+    li t6, 16
+    bge t0, t6, sum_final_loop_end
     slli t1, t0, 2    # offset = i * 4
     
     add t2, s0, t1    # Address in initial state
