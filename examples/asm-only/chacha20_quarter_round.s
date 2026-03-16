@@ -1,8 +1,8 @@
+.section .text
 .global chacha20_quarter_round
 
-#void chacha20_quarter_round(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d); 
-# use uint32_t for 32 bit register size  
-#
+# void chacha20_quarter_round(uint32_t *a, uint32_t *b, uint32_t *c, uint32_t *d);
+# use uint32_t for 32-bit register size
 # Arguments:
 # a0: pointer to 'a' (uint32_t *)
 # a1: pointer to 'b' (uint32_t *)
@@ -10,10 +10,9 @@
 # a3: pointer to 'd' (uint32_t *)
 
 chacha20_quarter_round:
-    addi sp, sp, -20 # space for ra, s0, s1, s2, s3
-    # load each register in stack 
-    sw ra, 16(sp)
-    sw s0, 12(sp) 
+    addi sp, sp, -16 # 16 bytes for s0, s1, s2, s3
+    # save registers that call saved
+    sw s0, 12(sp)
     sw s1, 8(sp)
     sw s2, 4(sp)
     sw s3, 0(sp)
@@ -65,11 +64,10 @@ chacha20_quarter_round:
     sw s2, 0(a2)
     sw s3, 0(a3)
 
-    # restore registers and return
+    # restore registers that call saved and return
     lw s3, 0(sp)
     lw s2, 4(sp)
     lw s1, 8(sp)
     lw s0, 12(sp)
-    lw ra, 16(sp)
-    addi sp, sp, 20
+    addi sp, sp, 16
     ret
