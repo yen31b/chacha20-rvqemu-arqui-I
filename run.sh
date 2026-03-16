@@ -1,4 +1,7 @@
 #!/bin/bash
+# Prevent Git Bash on Windows from converting Unix paths to Windows paths
+export MSYS_NO_PATHCONV=1
+
 IMAGE_NAME="rvqemu"
 
 # Detect container runtime (podman vs docker)
