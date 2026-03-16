@@ -15,5 +15,5 @@ SECTIONS
   
   /* Stack grows downward from this address */
   . = ALIGN(8);
-  _stack_top = . + 0x10000;  /* 64KB stack */
+  _stack_top = . + 0x20000;  /* 128KB stack (needed for chacha20 nested calls) */
 }
