@@ -67,9 +67,10 @@ chacha20_encrypt:
 
 # state[4...11]: copy 8 words from keys
     li t0, 0
+    li t5, 8                 # loop limit (bge needs a register, not an immediate)
 
 copy_key_loop:
-    bge  t0, 8, copy_key_loop_end
+    bge  t0, t5, copy_key_loop_end
     slli t1, t0, 2           # byte offset = i * 4
     add  t2, s6, t1          # &key[i]
     lw   t3, 0(t2)           # load key word
