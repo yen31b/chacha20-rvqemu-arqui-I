@@ -79,4 +79,43 @@ if [ $? -ne 0 ]; then
 fi
 echo "Built: test_block_chacha20.elf"
 
+# --- Test: chacha20_encrypt ---
+
+riscv64-unknown-elf-gcc \
+    -march=rv32im \
+    -mabi=ilp32 \
+    -nostdlib \
+    -ffreestanding \
+    -g3 \
+    -gdwarf-4 \
+    -c \
+    test_encrypt_chacha20.c \
+    -o test_encrypt_chacha20.o
+
+if [ $? -ne 0 ]; then
+    echo "test_encrypt_chacha20.c compilation failed"
+    exit 1
+fi
+
+riscv64-unknown-elf-gcc \
+    -march=rv32im \
+    -mabi=ilp32 \
+    -nostdlib \
+    -ffreestanding \
+    -g3 \
+    -gdwarf-4 \
+    startup.o \
+    test_encrypt_chacha20.o \
+    chacha20_encrypt.o \
+    block_chacha20.o \
+    chacha20_quarter_round.o \
+    -T linker.ld \
+    -o test_encrypt_chacha20.elf
+
+if [ $? -ne 0 ]; then
+    echo "Linking test_encrypt_chacha20.elf failed"
+    exit 1
+fi
+echo "Built: test_encrypt_chacha20.elf"
+
 echo "All tests built successfully"
