@@ -7,6 +7,7 @@ break main
 break sum_to_n
 break chacha20_quarter_round
 break chacha20_block
+break chacha20_encrypt
 
 # Show assembly and register views
 layout asm
