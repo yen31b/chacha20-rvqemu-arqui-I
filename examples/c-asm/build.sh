@@ -105,6 +105,23 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Compile main C program
+riscv64-unknown-elf-gcc \
+    -march=rv32im \
+    -mabi=ilp32 \
+    -nostdlib \
+    -ffreestanding \
+    -g3 \
+    -gdwarf-4 \
+    -c \
+    chacha20_main.c \
+    -o chacha20_main.o
+
+if [ $? -ne 0 ]; then
+    echo "chacha20_main.c compilation failed"
+    exit 1
+fi
+
 # Link object files together
 riscv64-unknown-elf-gcc \
     -march=rv32im \
@@ -119,6 +136,7 @@ riscv64-unknown-elf-gcc \
     chacha20_quarter_round.o \
     block_chacha20.o \
     chacha20_encrypt.o \
+    chacha20_main.o \
     -T linker.ld \
     -o example.elf
 
