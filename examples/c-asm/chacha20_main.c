@@ -94,7 +94,7 @@ static void print_nonce(const uint32_t *n) {
     print_char('\n');
 }
 
-// ---- Verificacion -------------------------------------------------------
+// Verificacion de pruebas
 
 static int tests_run    = 0;
 static int tests_passed = 0;
@@ -247,7 +247,7 @@ static void run_vector(const char     *title,
 {
     print_string("\033[1;35m"); print_string(title); print_string("\033[0m\n");
 
-    // -- Parametros --
+    // Parametros del vector
     print_string("\033[1;33m  Clave (256 bits):\033[0m\n");
     print_key(key);
     print_string("\033[1;33m  Nonce (96 bits):\033[0m\n");
@@ -308,9 +308,9 @@ void main(void) {
     print_string(" bytes correctos\n");
 
     if (tests_passed == tests_run)
-        print_string("\033[1;32m[PASSED] Todos los vectores RFC 8439 A.2 verificados.\033[0m\n");
+        print_string("\033[1;32m[PASSED] Todos los vectores RFC 8439 A.2 verificados\033[0m\n");
     else
-        print_string("\033[1;31m[FAILED] Alguna verificacion fallo.\033[0m\n");
+        print_string("\033[1;31m[FAILED] Alguna verificacion fallo\033[0m\n");
 
     while (1) { __asm__ volatile("nop"); }
 }
