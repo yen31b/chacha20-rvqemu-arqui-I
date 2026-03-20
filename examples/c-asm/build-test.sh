@@ -4,7 +4,7 @@
 # Requires build.sh to have been run first (needs startup.o, chacha20_quarter_round.o, block_chacha20.o)
 echo "Building all ChaCha20 tests..."
 
-# --- Test: chacha20_quarter_round ---
+# Test: chacha20_quarter_round
 
 riscv64-unknown-elf-gcc \
     -march=rv32im \
@@ -22,6 +22,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Link test_quarter_round.elf
 riscv64-unknown-elf-gcc \
     -march=rv32im \
     -mabi=ilp32 \
@@ -41,7 +42,7 @@ if [ $? -ne 0 ]; then
 fi
 echo "Built: test_quarter_round.elf"
 
-# --- Test: chacha20_block ---
+# Test: chacha20_block
 
 riscv64-unknown-elf-gcc \
     -march=rv32im \
@@ -59,6 +60,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Link test_block_chacha20.elf
 riscv64-unknown-elf-gcc \
     -march=rv32im \
     -mabi=ilp32 \
@@ -79,7 +81,7 @@ if [ $? -ne 0 ]; then
 fi
 echo "Built: test_block_chacha20.elf"
 
-# --- Test: chacha20_encrypt ---
+# Test: chacha20_encrypt
 
 riscv64-unknown-elf-gcc \
     -march=rv32im \
