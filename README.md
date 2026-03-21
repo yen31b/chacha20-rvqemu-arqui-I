@@ -32,7 +32,13 @@ Este proyecto proporciona un entorno completo para desarrollo y depuración de p
 ## Ejemplos disponibles
 
 ### Ensamblador puro (`examples/asm-only/`)
-Programa simple escrito completamente en ensamblador que calcula la suma del 1 al 10.
+test.s es un programa simple escrito completamente en ensamblador que calcula la suma del 1 al 10.
+
+chacha20_quarter_round.s es el programa donde se implementó la operación quarter round.
+
+chacha20_block programa principal del bloque
+
+
 
 ### C + Ensamblador (`examples/c-asm/`)
 Programa en C que llama funciones escritas en ensamblador, demostrando la integración entre ambos lenguajes. Este ejemplo incluye un archivo de inicio (startup.s) que inicializa la pila y llama a la función main de C, ya que los programas C necesitan un entorno de ejecución básico antes de ejecutar el código principal.
