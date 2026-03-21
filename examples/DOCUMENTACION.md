@@ -212,6 +212,8 @@ Con GDB se puede observar el estado de trabajo en el stack antes de entrar al bu
 0x...:  0x00000001 0x09000000 0x4a000000 0x00000000
 ```
 
+![Estado inicial en el stack antes de las rondas](img/before.PNG)
+
 **Estado de trabajo después de las 20 rondas (antes de la suma final):**
 ```gdb
 (gdb) break sum_final_loop
@@ -222,6 +224,9 @@ Con GDB se puede observar el estado de trabajo en el stack antes de entrar al bu
 0x...:  0x335271c2 0xf29489f3 0xeabda8fc 0x82e46ebd
 0x...:  0xd19c12b4 0xb04e16de 0x9e83d0cb 0x4e3c50a2
 ```
+
+
+![Estado despues](img/after.PNG)
 
 **Salida final después de sumar el estado inicial (keystream):**
 ```gdb
@@ -237,26 +242,18 @@ Estos 16 valores coinciden exactamente con el vector de RFC 8439 §2.3.2.
 
 ### 3.3 Salida de `chacha20_encrypt` — TV#1 del Appendix A.2
 
-```
-Test Vector #1 key=0, nonce=0, counter=0
-  Entrada   (plaintext, 64 bytes):
-  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
 
-  Encriptado por chacha20_encrypt:
-  76 b8 e0 ad a0 f1 3d 90 40 5d 6a e5 53 86 bd 28  v.....=.@]j.S..(
-  bd d2 19 b8 a0 8d ed 1a a8 36 ef cc 8b 77 0d c7  .........6...w..
-  da 41 59 7c 51 57 48 8d 77 24 e0 3f b8 d8 4a 37  .AY|QWH.w$.?..J7
-  6a 43 b8 f4 15 18 a1 1c c3 87 b6 69 b2 ee 65 86  jC.........i..e.
+![Salida tv1](img/tv1.PNG)
 
-  Ciphertext del TV #1 RFC:
-  76 b8 e0 ad a0 f1 3d 90 40 5d 6a e5 53 86 bd 28  ...
-  ...
+### 3.4 Salida de `chacha20_encrypt` — TV#2 del Appendix A.2
 
-  [PASS] TV1 ciphertext (64 bytes correct)
-```
+
+![Salida tv2](img/tv2.PNG)
+
+### 3.3 Salida de `chacha20_encrypt` — TV#3 del Appendix A.2
+
+
+![Salida tv3](img/tv3.PNG)
 
 ---
 
